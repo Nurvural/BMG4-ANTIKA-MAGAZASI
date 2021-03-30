@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="css/adminlte.min.css">
 </head>
     <body class="hold-transition login-page">
         <div class="login-box">
