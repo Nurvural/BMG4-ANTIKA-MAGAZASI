@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Kullanıcı Profili</title>
+         <?php include '_head.php';?> 
 
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="css/adminlte.min.css">
 </head>
 
   <body class="hold-transition sidebar-mini">
@@ -606,9 +605,6 @@
     <aside class="control-sidebar control-sidebar-dark">
     </aside>
   </div>
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="dist/js/adminlte.min.js"></script>
-  <script src="dist/js/demo.js"></script>
+ >
   </body>
 </html>

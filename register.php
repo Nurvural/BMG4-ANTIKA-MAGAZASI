@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
   <title>Kayıt</title>
-
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="css/adminlte.min.css">
+  <?php 
+   include '_head.php';   
+  ?> 
 </head>
-
   <body class="hold-transition register-page">
     <div class="register-box">
       <div class="card card-outline card-primary">
@@ -22,15 +17,16 @@
 
           <form action="login.php" method="post">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Full name">
+              <input name="username" type="text" class="form-control" placeholder="Usurname" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
                 </div>
               </div>
             </div>
+           
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email">
+              <input name="email" type="email" class="form-control" placeholder="Email" required> 
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -38,7 +34,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password">
+              <input name="password" type="password" class="form-control" placeholder="Password" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
@@ -46,24 +42,25 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Retype password">
+              <input name="password2" type="password" class="form-control" placeholder="Password" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
                 </div>
               </div>
             </div>
+           
             <div class="row">
               <div class="col-8">
                 <div class="icheck-primary">
-                  <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                  <input type="checkbox" id="agreeTerms" name="terms" value="agree" required>
                   <label for="agreeTerms">
                   <a href=""> Şartları </a>Kabul ediyorum 
                   </label>
                 </div>
               </div>
               <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+                <button type="submit" class="btn btn-primary btn-block" name="kayit">Kaydet</button>
               </div>
             </div>
           </form>
@@ -82,9 +79,41 @@
           <a href="login.php" class="text-center">Zaten Üyeliğim Var</a>
         </div>
     </div>
+    <?php
+  require 'server.php';
+  if(isset($_POST['kayit'])){
+    $isim = $_POST['username'];
+    $posta = $_POST['email'];
+    $sifre = $_POST['password'];
+    $sifredogrula = $_POST['password2'];
+   
+  
+   }else if(!filter_var($posta, FILTER_VALIDATE_EMAIL)){
+  
+    exit();
+  }
+  else if($sifre !== $sifredogrula){
+    header("Location: register.php?hata=sifrelereslesmedi");
+    exit();
+   
+  }else{
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?,?,?)");
+    if($stmt === false) die("Bağlantı Hatası:".$conn->error);
+    $kriptosifre = password_hash($sifre, PASSWORD_DEFAULT);
+    $stmt->bind_param("sss", $isim, $posta, $kriptosifre);
+    $stmt->execute();
+    header("Location: register.php?kayit=basarali");
+    exit();
+    $stmt->close();
+    $conn->close();
+   
+  }
 
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="dist/js/adminlte.min.js"></script>
+  if(isset($_GET['kayit'])){
+    if($_GET['kayit'] == "basarali"){
+    echo "Kayıt Başarıyla Eklendi";
+  }
+  }
+?>
   </body>
 </html>
