@@ -3,10 +3,7 @@
     <head>
     <meta charset="utf-8">
     <title>Şifremi Unuttum</title>
-
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <?php include '_head.php';?> 
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
@@ -38,8 +35,5 @@
             </div>
         </div>
 
-        <script src="plugins/jquery/jquery.min.js"></script>
-        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="dist/js/adminlte.min.js"></script>
     </body>
 </html>
