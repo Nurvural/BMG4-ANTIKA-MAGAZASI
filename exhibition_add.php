@@ -440,7 +440,7 @@ if ($_SESSION["Login"] == true) {
                     <?php
 
                     error_reporting(0);
-                    include("veritabani_baglanti.php");
+                    include("server.php");
 
                     if (isset($_POST['olustur'])) {
                         $sergi_ad = $_POST['sergi_isim'];
