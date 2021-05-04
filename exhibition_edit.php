@@ -163,7 +163,23 @@
         
         }
 
-       
+        if ($_GET['liste']=="sil") {
+	
+            $sil=$db->prepare("DELETE from sergi where id=:id");
+            $kontrol=$sil->execute(array(
+                'id' => $_GET['id']
+            ));
+        
+            if ($kontrol) {
+        
+                Header("Location:exhibition_edit.php?durum=ok");
+        
+            } else {
+        
+                Header("Location:exhibition_edit.php?durum=no");
+            }
+        
+        }
         
         ?>
 </form>

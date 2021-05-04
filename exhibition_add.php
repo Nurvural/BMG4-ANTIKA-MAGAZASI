@@ -6,7 +6,6 @@
 session_start();
 
 if ($_SESSION["Login"] == true) {
-
 ?>
     <!DOCTYPE html>
     <html lang="en">
