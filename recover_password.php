@@ -1,3 +1,14 @@
+<?php
+
+//session ile kullanici login mi diye kontrol ediyorum
+//eger login ise sayfaa giris yapabilsin
+//degil ise bu class'in sonunda yazdigim gibi login sayfasina yonlendirilsin ve islemleri login olmadigi icin kabul edilmesin
+session_start();
+
+if ($_SESSION["Login"] == true) {
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -5,8 +16,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Şifre Kurtarma</title>
-  <?php include '_head.php';?> 
 
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
     <body class="hold-transition login-page">
         <div class="login-box">
@@ -46,6 +59,15 @@
             </div>
         </div>
         </div>
-     
+        <script src="plugins/jquery/jquery.min.js"></script>
+        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="dist/js/adminlte.min.js"></script>
     </body>
 </html>
+
+<?php
+  //login olmayan kullanici
+} else {
+  header("location:login.php");
+}
+?>

@@ -3,6 +3,8 @@
 session_start();
 include("server.php");
 
+//login olmus mu olmamis mi kontrol ediyorum
+//eger login ise anasayfaya gececektir
 if (@$_SESSION["Login"] == true) {
   header("location:home_page.php");
 } else {
@@ -16,7 +18,10 @@ if (@$_SESSION["Login"] == true) {
   <head>
     <meta charset="utf-8">
     <title>login</title>
-    <?php include '_head.php';?>
+
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
   </head>
 
   <body class="hold-transition login-page">
@@ -32,7 +37,7 @@ if (@$_SESSION["Login"] == true) {
 
             <form method="post">
               <div class="input-group mb-3">
-                <input type="email" required class="form-control" placeholder="Email" name="mail" required>
+                <input type="email" required class="form-control" placeholder="Email" name="mail">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
@@ -40,7 +45,7 @@ if (@$_SESSION["Login"] == true) {
                 </div>
               </div>
               <div class="input-group mb-3">
-                <input type="password" required class="form-control" placeholder="Password" name="password" required>
+                <input type="password" required class="form-control" placeholder="Password" name="password">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-lock"></span>
@@ -72,7 +77,7 @@ if (@$_SESSION["Login"] == true) {
             </div>
 
             <p class="mb-1">
-              <a href="forgot_password.php">Şifremi Unuttum</a>
+              <a href="forgot_password.php" class="text-center">Şifremi Unuttum</a>
             </p>
             <p class="mb-0">
               <a href="register.php" class="text-center">Kayıt Ol</a>
@@ -83,19 +88,29 @@ if (@$_SESSION["Login"] == true) {
 
       <?php
 
+      //aerver class'imizi cagirdik
+      //baglantiyi kurduk
       include("server.php");
 
+      //giris butonuna basildigini kontrol ediyorum
       if (isset($_POST["giris"])) {
 
+        //basidiysa text alanari doldurulmus mu kontrolunu yapiyorum
         if (!empty($_POST["mail"] and !empty($_POST["password"]))) {
 
+          //doldurulan alanlardaki verileri aliyorum
           $email = strip_tags($_POST["mail"]);
           $sifre = strip_tags($_POST["password"]);
 
-          $userTablo = mysqli_query($conn, "select * from users where mail='$email'");
+          //burada yaptigim tablodaki o anki kullanicinin maili hangisiyse veritabninda o kullaniciyi bulup degiskene atiyorum
+          
+          $userTablo = mysqli_query($conn, "select * from user where mail='$email'");
+          //aldigim bilgileri dizide atiyorum
           $userDizi = mysqli_fetch_array($userTablo);
 
+          //dizideki sifre ile degiskendeki sifre uyusursa
           if ($sifre == $userDizi["password"]) {
+            //kullanici login oluyor ve sessionlarla tutuyorum
             $_SESSION["Login"] = true;
             $_SESSION["iUserMail"] = $userDizi["mail"];
             $_SESSION["iUserYetki"] = $userDizi["yetiki_id"];
@@ -112,12 +127,16 @@ if (@$_SESSION["Login"] == true) {
       ?>
 
     </form>
-    
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="dist/js/adminlte.min.js"></script>
   </body>
 
   </html>
 
 <?php
+
+//login degilse islem yapmayacak
 
 }
 

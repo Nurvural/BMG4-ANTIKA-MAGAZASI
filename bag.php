@@ -15,21 +15,17 @@ if ($_SESSION["Login"] == true) {
 
     <head>
         <meta charset="utf-8">
-        <title>Sergi Düzenle</title>
+        <title>Sepet</title>
 
         <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
-        <script>
-            function eylem() {
-                return confirm("Sergiyi Silmeyi Onaylıyor musunuz?");
-            }
-        </script>
 
     </head>
 
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
+
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -115,7 +111,7 @@ if ($_SESSION["Login"] == true) {
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item">
-                                <a href="home_page.php" class="nav-link">
+                                <a href="about.php" class="nav-link">
                                     <i class="nav-icon fas fa-columns"></i>
                                     <p>
                                         Anasayfa
@@ -174,6 +170,7 @@ if ($_SESSION["Login"] == true) {
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
+
                                     <li class="nav-item">
                                         <a href="exhibition_add.php" class="nav-link">
                                             <i class="nav-icon fas fa-chart-pie"></i>
@@ -200,7 +197,7 @@ if ($_SESSION["Login"] == true) {
                                 <ul class="nav nav-treeview">
 
                                     <?php
-                                    include("veritabani_baglanti.php");
+                                    include("server.php");
                                     $admin = $_SESSION["iUserMail"];
 
                                     $adminsor = mysqli_query($conn, "select * from user where mail='$admin'");
@@ -272,12 +269,12 @@ if ($_SESSION["Login"] == true) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Sergi Düzenle</h1>
+                                <h1>Sepet</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="home_page.php">Anasayfa</a></li>
-                                    <li class="breadcrumb-item active">Sergi Düzenle</li>
+                                    <li class="breadcrumb-item active">Sepet</li>
                                 </ol>
                             </div>
                         </div>
@@ -285,224 +282,21 @@ if ($_SESSION["Login"] == true) {
                 </section>
 
                 <section class="content">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="card card-teal">
-                                <div class="card-header">
-                                    <h3 class="card-title">Kayıtlı Sergilerim</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-olive">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Sepet</h3>
                                     </div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Seç</th>
-                                                <th>Sergi İsmi</th>
-                                                <th>Bütçe</th>
-                                                <th>Mail</th>
-                                                <th>İçerik</th>
-                                                <th>Oluşturma Tarihi</th>
-                                                <th>Bitiş Tarihi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
+                                    <div>
 
-                                            include("server.php");
-                                            $email = $_SESSION['iUserMail'];
-
-                                            $tablo = mysqli_query($conn, "select * from sergi WHERE firma='$email'");
-
-                                            while ($dizi = $tablo->fetch_assoc()) {
-
-                                                echo "<tr>";
-                                                echo "<td>";
-
-                                            ?>
-                                                <form method="POST">
-                                                    <div class="btn-group btn-group-sm">
-
-                                                        <i class="fas fa-trash">
-
-                                                            <a class="btn btn-danger" href="exhibition_edit.php?id=<?php echo $dizi['id']; ?>"> Sil </a>
-                                                        </i>
-
-                                                    </div>
-                                                    <div class="btn-group btn-group-sm">
-                                                        <i>
-                                                            <input type="submit" class="btn btn-block btn-info btn-sm" name="duzenle" value="Düzenle">
-                                                        </i>
-                                                    </div>
-
-                                                </form>
-
-                                                <?php
-
-                                                echo "<td>";
-                                                echo $dizi["sergi_ismi"] . "<br><br>";
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo $dizi["butce"] . "<br><br>";
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo $dizi["firma"] . "<br><br>";
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo $dizi["icerik"] . "<br><br>";
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo $dizi["bas_tarih"] . "<br><br>";
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo $dizi["bit_tarih"] . "<br><br>";
-                                                echo "</td>";
-
-                                                ?>
-                                            <?php
-                                            }
-
-                                            ?>
-
-                                            <?php
-
-                                            error_reporting(0);
-                                            include("server.php");
-                                            if (isset($_GET['id'])) {
-                                                $sergi_id = $_GET['id'];
-                                                $sql = mysqli_query($conn, "DELETE FROM sergi where id='$sergi_id'");
-                                            }
-                                            ?>
-
-                                        </tbody>
-                                    </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="col-md-6" id="duzen">
-                            <div class="card card-purple">
-                                <div class="card-header">
-                                    <h3 class="card-title">Düzenle</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <form method="POST">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="inputName">Düzenlenecek Sergi İsmi</label>
-                                            <input type="text" name="duzen_isim" required class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputName">Sergi İsmi</label>
-                                            <input type="text" name="sergi_isim" required class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputEstimatedBudget">Bütçe</label>
-                                            <input type="number" name="butce" required class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputDescription">Açıklama</label>
-                                            <textarea name="ser_aciklama" class="form-control" rows="4" required class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputStatus">İçerik</label>
-                                            <select name="icerik" class="form-control custom-select">
-                                                <option selected disabled>Seç</option>
-                                                <option>Ayna</option>
-                                                <option>Biblo</option>
-                                                <option>Ev Eşyaları</option>
-                                                <option>Aksesuar</option>
-                                                <option>Giyim</option>
-                                                <option>Araç</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputClientCompany">Firma Mail</label>
-                                            <input type="text" name="firma_mail" required class="form-control">
-                                            <?php echo $dizi['firma'] ?>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputClientCompany">Firma Sahibi</label>
-                                            <input type="text" name="sahip" required class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Başlangıç Tarihi:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                                <input required type="date" class="form-control float-right" name="baslangic_tarih">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Bitiş Tarihi:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                                <input required type="date" class="form-control float-right" name="bitis_tarih">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <input type="submit" value="Kaydet" name="kayit" class="btn btn-success float-right">
-                                        </div>
-                                    </div>
-                                </form>
-                                <?php
-
-                                include("veritabani_baglanti.php");
-
-                                echo $duzen;
-                                $duzen = $_POST['duzen_isim'];
-                                $isim = $_POST['sergi_isim'];
-                                $aciklama = $_POST['ser_aciklama'];
-                                $icerik = $_POST['icerik'];
-                                $mail = $_POST['firma_mail'];
-                                $sahip = $_POST['sahip'];
-                                $fiyat = $_POST['butce'];
-                                $baslangic_tarih = $_POST['baslangic_tarih'];
-                                $bitis_tarih = $_POST['bitis_tarih'];
-
-                                if (isset($_POST['kayit'])) {
-
-                                    mysqli_query($conn, "UPDATE sergi SET sergi_ismi='$isim', aciklama='$aciklama', icerik='$icerik', firma='$mail', sahip='$sahip', butce='$fiyat', bas_tarih='$baslangic_tarih', bit_tarih='$bitis_tarih' where sergi_ismi='$duzen'");
-                                }
-
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
                 </section>
             </div>
-
             <footer class="main-footer">
                 <div class="float-right d-none d-sm-block">
                 </div>
@@ -519,7 +313,13 @@ if ($_SESSION["Login"] == true) {
 
         <script src="dist/js/adminlte.min.js"></script>
 
+        <script src="plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+
+        <script src="plugins/bootstrap-slider/bootstrap-slider.min.js"></script>
+
         <script src="dist/js/demo.js"></script>
+
+
     </body>
 
     </html>
